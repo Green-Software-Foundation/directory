@@ -38,7 +38,6 @@ export default function SingleWorkingGroup({
       label: "Contact",
     },
   ].filter(Boolean);
-
   return (
     <div>
       <AppBreadcrumb currentPath="/working-groups" pageName={title} />
@@ -108,7 +107,7 @@ export default function SingleWorkingGroup({
         <div className="mt-8">
           <Title titleText="Projects" />
           <div className="mt-4 grid grid-cols-1 lg:grid-cols-2 gap-5">
-            {projects.map((project, index) => (
+            {projects.sort((a, b) => a.title.localeCompare(b.title)).map((project, index) => (
               <ProjectCard key={index} {...project} className="w-full" />
             ))}
           </div>
