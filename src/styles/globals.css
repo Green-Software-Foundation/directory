@@ -69,3 +69,27 @@
     @apply bg-accent-lightest-2 text-black;
   }
 }
+
+@layer components {
+  .callout {
+    @apply flex items-start gap-3 p-4 rounded-lg border;
+    background-color: var(--accent-lightest-1);
+    border-color: var(--accent-light);
+  }
+
+  .callout-icon {
+    @apply text-xl flex-shrink-0 mt-0.5;
+  }
+
+  .callout-content {
+    @apply flex-1;
+  }
+
+  .callout-content p {
+    @apply m-0;
+  }
+
+  .callout-content p + p {
+    @apply mt-2;
+  }
+}
