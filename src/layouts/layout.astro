@@ -1,0 +1,76 @@
+---
+import AppLayout from "@/components/layout";
+import "@/styles/globals.css";
+
+interface Props {
+  pageName?: string;
+  sidebarData?: any;
+  description?: string;
+}
+
+const { pageName, description = "Everything you need to know about the Green Software Foundation - discover sustainable software practices, connect with eco-conscious developers, and join the movement for greener technology." } = Astro.props as Props;
+console.log(description);
+---
+
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NGR6F8LMSK"
+    ></script>
+    <script>
+      // @ts-ignore
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+         // @ts-ignore
+        dataLayer.push(arguments);
+      }
+       // @ts-ignore
+      gtag("js", new Date());
+       // @ts-ignore
+      gtag("config", "G-NGR6F8LMSK");
+    </script>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/gsf-icon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content={`GSF Directory ${pageName ? `| ${pageName}` : ''}`} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="GSF, Green Software Foundation, sustainable software, green tech, eco-friendly development, climate action, software sustainability" />
+    <meta name="author" content="GSF Directory" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://directory.greensoftware.foundation/" />
+    <meta property="og:title" content={`GSF Directory ${pageName ? `| ${pageName}` : ''}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/assets/og-image.png" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://directory.greensoftware.foundation/" />
+    <meta property="twitter:title" content={`GSF Directory ${pageName ? `| ${pageName}` : ''}`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="/assets/og-image.png" />
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#006d69" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap"
+      rel="stylesheet"
+    />
+    <title>GSF Directory  {pageName ? `| ${pageName} ` : ''}</title>
+  </head>
+  <body>
+    <AppLayout client:load>
+    
+        <slot />
+    </AppLayout>
+  </body>
+</html>

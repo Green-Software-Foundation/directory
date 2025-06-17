@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/layout.astro";
+import SingleCommittee from "@/components/single-committee";
+import type { Committee } from "../../components/committees-list";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("committees");
+  
+  // Create sidebar data as a simple list of all committees
+  const sidebarData = [{
+    title: "Committees",
+    type: 'committees',
+    items: entries.map(entry => entry.data.title)
+  }];
+  
+  // Return paths for each committee
+  return entries.map((entry) => ({
+    params: {
+      id: entry.data.title.toLowerCase().replace(/\s+/g, "-"),
+    },
+    props: { 
+      committee: {
+        id: entry.data.id,
+        title: entry.data.title,
+        type: entry.data.type || "Committee",
+        description: entry.data.description,
+        icon: entry.data.icon,
+        website: entry.data.website,
+        repo: entry.data.repo,
+        googleGroup: entry.data.googleGroup,
+        pageContent: entry.data.pageContent,
+        leads: entry.data.leads || [],
+        members: entry.data.members || [],
+        projects: entry.data.projects || []
+      } as unknown as Committee, 
+      sidebarData 
+    },
+  }));
+}
+
+const { committee, sidebarData } = Astro.props;
+---
+<Layout pageName={committee.title} description={committee.description} sidebarData={sidebarData}>
+  <SingleCommittee 
+    committee={committee} 
+    client:load 
+  />
+</Layout>

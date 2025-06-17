@@ -1,0 +1,11 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/layout.astro";
+import WorkingGroupsList from "@/components/working-groups-list";
+
+const workingGroups = await getCollection("workingGroups");
+---
+
+<Layout pageName="Working Groups">
+  <WorkingGroupsList workingGroups={workingGroups} client:load />
+</Layout>

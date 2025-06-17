@@ -1,0 +1,17 @@
+---
+import Layout from "../layouts/layout.astro";
+import MembersList from "@/components/members-list";
+import { getCollection } from "astro:content";
+const members = await getCollection("members");
+const membersByLevel = members.reduce((acc, member) => {
+  const level = member.data.level || 'Other';
+  return {
+    ...acc,
+    [level]: [...(acc[level] || []), member.data]
+  };
+}, {} as Record<string, typeof members>);
+---
+
+<Layout pageName="Members">
+  <MembersList client:load membersByLevel={membersByLevel} />
+</Layout>

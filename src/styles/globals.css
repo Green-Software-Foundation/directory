@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .font-extralight { font-weight: 200; }
+  .font-light { font-weight: 300; }
+  .font-normal { font-weight: 400; }
+  .font-medium { font-weight: 500; }
+  .font-semibold { font-weight: 600; }
+  .font-bold { font-weight: 700; }
+  .font-extrabold { font-weight: 800; }
+  .font-black { font-weight: 900; }
+  .font-extrablack { font-weight: 1000; }
+}
+
+@layer base {
+  :root {
+    --font-sans: "Nunito Sans";
+
+    --background: #fff;
+
+    --primary-darkest-2: #002625;
+    --primary-darkest: #002c2a;
+    --primary-darker: #003734;
+    --primary-dark: #00524f;
+    --primary: #006d69;
+    --primary-light: #80b6b4;
+    --primary-lighter: #bfdbd9;
+    --primary-lightest-2: #e5f0f0;
+    --primary-lightest-1: #f2f8f7;
+    --accent-darker: #576629;
+    --accent-dark: #83993e;
+    --accent: #aecc53;
+    --accent-light: #d7e6a9;
+    --accent-lighter: #ebf2d4;
+    --accent-lightest-2: #f7faee;
+    --accent-lightest-1: #fbfcf6;
+    --gray-darker: #606060;
+    --gray-dark: #b2b2b2;
+    --gray: #ededed;
+    --gray-light: #f6f6f6;
+    --gray-lighter: #fbfbfb;
+    --gray-lightest-2: #fdfdfd;
+    --gray-lightest-1: #fefefe;
+    --black: #3c3c3c;
+
+    --border: #e5e5e5;
+    --input: #ededed;
+    --ring: #0a0a0a;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-accent-lightest-2 text-black;
+  }
+}

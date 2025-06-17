@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/layout.astro";
+import SingleWorkingGroup from "@/components/single-working-group";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("workingGroups");
+
+  // Return paths for each working group
+  return entries.map((entry) => ({
+    params: {
+      id: entry.data.title.toLowerCase().replace(/\s+/g, "-"),
+    },
+    props: { 
+      workingGroup: entry.data, 
+    },
+  }));
+}
+
+const { workingGroup } = Astro.props;
+---
+
+<Layout pageName={workingGroup.title} description={workingGroup.description}>
+  <SingleWorkingGroup 
+    workingGroup={workingGroup as any} 
+    client:load 
+  />
+</Layout>

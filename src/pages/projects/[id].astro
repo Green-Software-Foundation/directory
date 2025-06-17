@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/layout.astro";
+import SingleProject from "@/components/single-project";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("projects");
+  return entries.map((entry) => ({
+    params: {
+      id: entry.data.title
+        .toLowerCase()
+        .replace(/\s+/g, "-"),
+    },
+    props: { entry },
+  }));
+}
+
+const { entry: project  } = Astro.props;
+---
+
+<Layout pageName={project.data.title} description={project.data.description}>
+  <SingleProject 
+    project={project.data as any} 
+    client:load 
+  />
+</Layout>

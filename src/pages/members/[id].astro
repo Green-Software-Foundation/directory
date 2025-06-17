@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/layout.astro";
+import SingleMember from "@/components/single-member";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("members");
+  return entries.map((entry) => ({
+    params: {
+      id: entry.data.name
+        .toLowerCase()
+        .replace(/\s+/g, "-"),
+    },
+    props: { 
+      entry, 
+    },
+  }));
+}
+
+const { entry: memberData } = Astro.props;
+---
+
+<Layout pageName={memberData.data.name} description={memberData.data.description}>
+  <SingleMember member={memberData.data as any}  client:load />
+</Layout>

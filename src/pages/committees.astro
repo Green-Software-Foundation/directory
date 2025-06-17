@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/layout.astro";
+import CommitteesList from "@/components/committees-list";
+import type { Committee } from "../components/committees-list";
+
+const committeesData = await getCollection("committees");
+const committees = committeesData.map((committee) => {
+  return {
+    id: committee.data.id,
+    title: committee.data.title,
+    type: committee.data.type || "Committee",
+    description: committee.data.description,
+    icon: committee.data.icon,
+    website: committee.data.website,
+    repo: committee.data.repo,
+    googleGroup: committee.data.googleGroup,
+    pageContent: committee.data.pageContent,
+    leads: committee.data.leads || [],
+    members: committee.data.members || [],
+    projects: committee.data.projects || []
+  } as unknown as Committee;
+});
+---
+
+<Layout pageName="Committees">
+  <CommitteesList committees={committees} client:load />
+</Layout>

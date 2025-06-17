@@ -1,0 +1,10 @@
+---
+import Layout from "../layouts/layout.astro";
+import AppProjects from "@/components/projects-list";
+import { getCollection } from "astro:content";
+const projects = await getCollection("projects");
+---
+
+<Layout pageName="Projects">
+  <AppProjects client:load projects={projects}/>
+</Layout>
