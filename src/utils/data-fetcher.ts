@@ -1,20 +1,63 @@
 import { notion, saveIconToFolder, createOrgLeadsDict } from "./notion";
 import { type NotionData, type NotionPage, type NotionSubscription } from "../types/notion";
-import type { PageObjectResponse, QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+
+type DataSourceQueryParams = Omit<Parameters<typeof notion.dataSources.query>[0], "data_source_id">;
+type QueryDataSourceResponse = Awaited<ReturnType<typeof notion.dataSources.query>>;
+
+const dataSourceIdCache = new Map<string, string>();
+
+async function resolveDataSourceId(options: {
+  databaseId: string;
+  dataSourceId?: string;
+  label?: string;
+}): Promise<string> {
+  const { databaseId, dataSourceId, label } = options;
+  if (dataSourceId) return dataSourceId;
+
+  const cached = dataSourceIdCache.get(databaseId);
+  if (cached) return cached;
+
+  const database = await notion.databases.retrieve({ database_id: databaseId });
+  const dataSources = (database as { data_sources?: Array<{ id: string; name?: string }> }).data_sources ?? [];
+
+  if (!dataSources.length) {
+    throw new Error(`No data sources found for database ${label ?? databaseId}.`);
+  }
+
+  if (dataSources.length > 1) {
+    const first = dataSources[0];
+    console.warn(
+      `[notion] Database ${label ?? databaseId} has multiple data sources; using the first one (${
+        first.name ?? first.id
+      }). Set a NOTION_*_DATA_SOURCE_ID env var to override.`
+    );
+  }
+
+  const selectedId = dataSources[0].id;
+  dataSourceIdCache.set(databaseId, selectedId);
+  return selectedId;
+}
 
 /**
- * Helper function to fetch all pages from a Notion database with pagination support
+ * Helper function to fetch all pages from a Notion data source with pagination support
  */
-async function fetchAllPagesFromDatabase(params: Parameters<typeof notion.databases.query>[0]): Promise<QueryDatabaseResponse> {
+async function fetchAllPagesFromDataSource(
+  dataSourceId: string,
+  params: DataSourceQueryParams
+): Promise<QueryDataSourceResponse> {
   let allResults: PageObjectResponse[] = [];
   let hasMore = true;
   let startCursor: string | undefined = undefined;
+  let lastResponse: QueryDataSourceResponse | undefined = undefined;
   
   while (hasMore) {
-    const response = await notion.databases.query({
+    const response = await notion.dataSources.query({
       ...params,
+      data_source_id: dataSourceId,
       start_cursor: startCursor,
     });
+    lastResponse = response;
     
     // Add the current page of results
     const pageResults = response.results.filter((page): page is PageObjectResponse => 
@@ -27,13 +70,15 @@ async function fetchAllPagesFromDatabase(params: Parameters<typeof notion.databa
     startCursor = response.next_cursor || undefined;
   }
   
+  if (!lastResponse) {
+    throw new Error(`No response returned when querying data source ${dataSourceId}.`);
+  }
+
   return {
+    ...lastResponse,
     results: allResults,
     has_more: false,
     next_cursor: null,
-    object: 'list',
-    type: 'page_or_database',
-    page_or_database: {}
   };
 }
 
@@ -42,9 +87,24 @@ async function fetchAllPagesFromDatabase(params: Parameters<typeof notion.databa
  */
 export async function fetchNotionData(): Promise<Omit<NotionData, 'orgLeadsDict'>> {
   try {
+    const projectsDataSourceId = await resolveDataSourceId({
+      databaseId: import.meta.env.NOTION_PROJECTS_DATABASE_ID,
+      dataSourceId: import.meta.env.NOTION_PROJECTS_DATA_SOURCE_ID,
+      label: "projects",
+    });
+    const subscriptionsDataSourceId = await resolveDataSourceId({
+      databaseId: import.meta.env.NOTION_SUBSCRIPTIONS_DATABASE_ID,
+      dataSourceId: import.meta.env.NOTION_SUBSCRIPTIONS_DATA_SOURCE_ID,
+      label: "subscriptions",
+    });
+    const membersDataSourceId = await resolveDataSourceId({
+      databaseId: import.meta.env.NOTION_MEMBERS_DATABASE_ID,
+      dataSourceId: import.meta.env.NOTION_MEMBERS_DATA_SOURCE_ID,
+      label: "members",
+    });
+
     // Fetch projects
-    const projectsResponse = await fetchAllPagesFromDatabase({
-      database_id: import.meta.env.NOTION_PROJECTS_DATABASE_ID,
+    const projectsResponse = await fetchAllPagesFromDataSource(projectsDataSourceId, {
       filter: {
         and: [
           {
@@ -81,8 +141,7 @@ export async function fetchNotionData(): Promise<Omit<NotionData, 'orgLeadsDict'
     });
 
     // Fetch subscriptions
-    const subscriptionResponse = await fetchAllPagesFromDatabase({
-      database_id: import.meta.env.NOTION_SUBSCRIPTIONS_DATABASE_ID,
+    const subscriptionResponse = await fetchAllPagesFromDataSource(subscriptionsDataSourceId, {
       filter: {
         and: [
           {
@@ -108,8 +167,7 @@ export async function fetchNotionData(): Promise<Omit<NotionData, 'orgLeadsDict'
     });
 
     // Fetch members
-    const membersResponse = await fetchAllPagesFromDatabase({
-      database_id: import.meta.env.NOTION_MEMBERS_DATABASE_ID,
+    const membersResponse = await fetchAllPagesFromDataSource(membersDataSourceId, {
       filter: {
         and: [
           {
@@ -123,8 +181,7 @@ export async function fetchNotionData(): Promise<Omit<NotionData, 'orgLeadsDict'
     });
 
     // Fetch working groups
-    const workingGroupsResponse = await fetchAllPagesFromDatabase({
-      database_id: import.meta.env.NOTION_PROJECTS_DATABASE_ID,
+    const workingGroupsResponse = await fetchAllPagesFromDataSource(projectsDataSourceId, {
       filter: {
         and: [
           {
@@ -144,8 +201,7 @@ export async function fetchNotionData(): Promise<Omit<NotionData, 'orgLeadsDict'
     });
 
     // Fetch committees
-    const committeesResponse = await fetchAllPagesFromDatabase({
-      database_id: import.meta.env.NOTION_PROJECTS_DATABASE_ID,
+    const committeesResponse = await fetchAllPagesFromDataSource(projectsDataSourceId, {
       filter: {
         and: [
           {

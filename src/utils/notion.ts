@@ -6,6 +6,7 @@ import { type NotionPage, type NotionSubscription, type Person } from "../types/
 // Initialize Notion client
 export const notion = new Client({
   auth: import.meta.env.NOTION_TOKEN,
+  notionVersion: "2025-09-03",
 });
 
 /**
