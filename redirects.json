@@ -1,1 +1,24 @@
-[]
+[
+  { "from": "/projects/software-carbon-intensity-for-artificial-intelligence-(sci-for-ai)/", "to": "/projects/sci-ai/" },
+  { "from": "/projects/software-carbon-intensity-for-artificial-intelligence/", "to": "/projects/sci-ai/" },
+  { "from": "/projects/software-carbon-intensity-for-web-(sci-for-web)/", "to": "/projects/sci-web/" },
+  { "from": "/projects/software-carbon-intensity-for-web/", "to": "/projects/sci-web/" },
+  { "from": "/projects/software-energy-efficiency-(see)/", "to": "/projects/see/" },
+  { "from": "/projects/software-energy-efficiency/", "to": "/projects/see/" },
+  { "from": "/projects/software-water-efficiency-(swe)/", "to": "/projects/swe/" },
+  { "from": "/projects/software-water-efficiency/", "to": "/projects/swe/" },
+  { "from": "/projects/real-time-energy-and-carbon-standard-for-cloud-providers-(rtc)/", "to": "/projects/real-time-cloud/" },
+  { "from": "/projects/real-time-energy-and-carbon-standard-for-cloud-providers/", "to": "/projects/real-time-cloud/" },
+  { "from": "/projects/carbon-measurement-engine-(Carmen)/", "to": "/projects/carmen/" },
+  { "from": "/projects/carbon-measurement-engine/", "to": "/projects/carmen/" },
+  { "from": "/projects/software-carbon-intensity-for-opentelemetry-(sci-for-otel)/", "to": "/projects/sci-otel/" },
+  { "from": "/projects/software-carbon-intensity-for-opentelemetry/", "to": "/projects/sci-otel/" },
+  { "from": "/projects/sustainable-organisational-framework-for-technology-(soft)/", "to": "/projects/soft/" },
+  { "from": "/projects/sustainable-organisational-framework-for-technology/", "to": "/projects/soft/" },
+  { "from": "/projects/workload-dynamic-power-and-cooling-(WDPC)/", "to": "/projects/wdpc/" },
+  { "from": "/projects/workload-dynamic-power-and-cooling/", "to": "/projects/wdpc/" },
+  { "from": "/projects/software-carbon-intensity-for-software-security/", "to": "/projects/sci-security/" },
+  { "from": "/projects/software-carbon-intensity-for-software-security-(sci-security)/", "to": "/projects/sci-security/" },
+  { "from": "/projects/self-certification-program/", "to": "/projects/sci-self-certification/" },
+  { "from": "/projects/sci-self-certification-program/", "to": "/projects/sci-self-certification/" }
+]
