@@ -17,12 +17,13 @@ export async function getStaticPaths() {
   // Return paths for each committee
   return entries.map((entry) => ({
     params: {
-      id: entry.data.title.toLowerCase().replace(/\s+/g, "-"),
+      id: entry.data.slug || entry.data.title.toLowerCase().replace(/\s+/g, "-"),
     },
     props: { 
       committee: {
         id: entry.data.id,
         title: entry.data.title,
+        slug: entry.data.slug,
         type: entry.data.type || "Committee",
         description: entry.data.description,
         icon: entry.data.icon,

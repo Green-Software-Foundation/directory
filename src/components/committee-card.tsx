@@ -10,6 +10,7 @@ import {
 
 interface CommitteeCardProps {
   title: string;
+  slug?: string;
   description?: string;
   icon?: string;
   projects?: {
@@ -27,11 +28,12 @@ interface CommitteeCardProps {
 
 export const CommitteeCard = ({
   title,
+  slug,
   icon,
   projects,
   ...props
 }: CommitteeCardProps) => {
-  const committeeSlug = title.toLowerCase().replace(/\s+/g, "-");
+  const committeeSlug = slug || title.toLowerCase().replace(/\s+/g, "-");
   return (
     <a href={`/committees/${committeeSlug}`}>
       <Card className={cn("w-96 flex flex-col gap-4 h-full", props.className)}>

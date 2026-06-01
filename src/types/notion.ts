@@ -39,6 +39,7 @@ export interface Person {
 export interface Project {
   id: string;
   title: string;
+  slug?: string;
   type: string;
   description?: string;
   workingGroup?: {
@@ -68,6 +69,7 @@ export interface Member {
 export interface WorkingGroup {
   id: string;
   title: string;
+  slug?: string;
   type: string;
   description?: string;
   icon?: string;
@@ -82,6 +84,7 @@ export interface WorkingGroup {
 export interface Committee {
   id: string;
   title: string;
+  slug?: string;
   type: string;
   description?: string;
   icon?: string;
