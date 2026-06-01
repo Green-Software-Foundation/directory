@@ -6,6 +6,7 @@ import { SearchableList } from "./ui/searchable-list";
 export interface Committee {
   id: string;
   title: string;
+  slug?: string;
   type: string;
   description?: string;
   icon?: string;
@@ -70,6 +71,7 @@ export default function CommitteesList({ committees }: CommitteesListProps) {
             <CommitteeCard
               key={committee.id}
               title={committee.title}
+              slug={committee.slug}
               description={committee.description}
               icon={committee.icon}
               projects={committee.projects}
