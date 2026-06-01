@@ -10,6 +10,7 @@ import {
 
 interface WorkingGroupCardProps {
   title: string;
+  slug?: string;
   description?: string;
   icon?: string;
   projects?: any[];
@@ -18,11 +19,12 @@ interface WorkingGroupCardProps {
 
 export const WorkingGroupCard = ({
   title,
+  slug,
   icon,
   projects,
   ...props
 }: WorkingGroupCardProps) => {
-  const workingGroupSlug = title.toLowerCase().replace(/\s+/g, "-");
+  const workingGroupSlug = slug || title.toLowerCase().replace(/\s+/g, "-");
   return (
     <a href={`/working-groups/${workingGroupSlug}`}>
       <Card className={cn("w-96 flex flex-col gap-4 h-full", props.className)}>

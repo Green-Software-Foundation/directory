@@ -24,6 +24,7 @@ export async function mapNotionToProject(
   return {
     id: page.id,
     title,
+    slug: page.properties["Slug"]?.rich_text?.[0]?.plain_text || undefined,
     type: page.properties.Type?.select?.name || "",
     description: page.properties.Description?.rich_text?.[0]?.plain_text || "",
     workingGroup: {
@@ -123,6 +124,7 @@ export async function mapNotionToWorkingGroup(
   return {
     id: page.id,
     title,
+    slug: page.properties["Slug"]?.rich_text?.[0]?.plain_text || undefined,
     type: page.properties.Type?.select?.name || "Working Group",
     description: page.properties.Description?.rich_text?.[0]?.plain_text || "",
     icon,
@@ -180,6 +182,7 @@ export async function mapNotionToCommittee(
   return {
     id: page.id,
     title,
+    slug: page.properties["Slug"]?.rich_text?.[0]?.plain_text || undefined,
     type: page.properties.Type?.select?.name || "Committee",
     description: page.properties.Description?.rich_text?.[0]?.plain_text || "",
     icon,

@@ -14,6 +14,7 @@ const personSchema = z.object({
 const baseEntitySchema = {
   id: z.string(),
   title: z.string(),
+  slug: z.string().optional(),
   type: z.string(),
   description: z.string().optional(),
   icon: z.string().optional(),

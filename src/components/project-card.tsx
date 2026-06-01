@@ -14,13 +14,14 @@ type ProjectCardProps = Project & {
 
 export const ProjectCard = ({
   title,
+  slug,
   description,
   lifecycleStage,
   workingGroup,
   icon,
   ...props
 }: ProjectCardProps) => {
-  const projectSlug = title.toLowerCase().replace(/\s+/g, "-");
+  const projectSlug = slug || title.toLowerCase().replace(/\s+/g, "-");
   return (
     <a href={`/projects/${projectSlug}`}>
       <Card className={cn("w-96 flex flex-col gap-4 h-full", props.className)}>

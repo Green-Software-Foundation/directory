@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   // Return paths for each working group
   return entries.map((entry) => ({
     params: {
-      id: entry.data.title.toLowerCase().replace(/\s+/g, "-"),
+      id: entry.data.slug || entry.data.title.toLowerCase().replace(/\s+/g, "-"),
     },
     props: { 
       workingGroup: entry.data, 

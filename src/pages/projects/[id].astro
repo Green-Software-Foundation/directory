@@ -7,9 +7,7 @@ export async function getStaticPaths() {
   const entries = await getCollection("projects");
   return entries.map((entry) => ({
     params: {
-      id: entry.data.title
-        .toLowerCase()
-        .replace(/\s+/g, "-"),
+      id: entry.data.slug || entry.data.title.toLowerCase().replace(/\s+/g, "-"),
     },
     props: { entry },
   }));
