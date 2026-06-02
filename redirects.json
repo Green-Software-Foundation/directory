@@ -21,5 +21,8 @@
   { "from": "/projects/software-carbon-intensity-for-software-security-(sci-security)/", "to": "/projects/sci-security/" },
   { "from": "/projects/self-certification-program/", "to": "/projects/sci-self-certification/" },
   { "from": "/projects/sci-self-certification-program/", "to": "/projects/sci-self-certification/" },
-  { "from": "/projects/green-ai-comm/", "to": "/projects/green-ai-committee/" }
+  { "from": "/projects/green-ai-comm/", "to": "/projects/green-ai-committee/" },
+  { "from": "/working-groups/software-standards-working-group/", "to": "/working-groups/software-wg/" },
+  { "from": "/working-groups/hardware-standards-working-group/", "to": "/working-groups/hardware-wg/" },
+  { "from": "/working-groups/policy-working-group/", "to": "/working-groups/policy-wg/" }
 ]
