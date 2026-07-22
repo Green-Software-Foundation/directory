@@ -54,6 +54,7 @@ export const workingGroupsSchema = z.object({
       z.object({
         id: z.string(),
         title: z.string(),
+        slug: z.string().optional(),
         description: z.string().optional(),
         type: z.string(),
         icon: z.string().optional(),
@@ -76,6 +77,7 @@ export const committeesSchema = z.object({
       z.object({
         id: z.string(),
         title: z.string(),
+        slug: z.string().optional(),
         description: z.string().optional(),
         type: z.string(),
         icon: z.string().optional(),

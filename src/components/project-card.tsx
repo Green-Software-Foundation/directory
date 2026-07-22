@@ -21,7 +21,14 @@ export const ProjectCard = ({
   icon,
   ...props
 }: ProjectCardProps) => {
-  const projectSlug = slug || title.toLowerCase().replace(/\s+/g, "-");
+  const projectSlug =
+    slug ||
+    title
+      .toLowerCase()
+      .replace(/\([^)]*\)/g, "")
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   return (
     <a href={`/projects/${projectSlug}`}>
       <Card className={cn("w-96 flex flex-col gap-4 h-full", props.className)}>
