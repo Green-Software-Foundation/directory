@@ -1,6 +1,7 @@
 export interface Project {
   id: string;
   title: string;
+  slug?: string;
   type: string;
   description?: string;
   workingGroup?: {

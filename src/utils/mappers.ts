@@ -83,6 +83,7 @@ export function mapToRelatedProject(project: NotionPage, parentTitle: string): P
   return {
     id: project.id,
     title: projectTitle,
+    slug: project.properties["slug"]?.rich_text?.[0]?.plain_text || undefined,
     description: project.properties.Description?.rich_text?.[0]?.plain_text || "",
     type: project.properties.Type?.select?.name || "",
     icon: projectIcon,
