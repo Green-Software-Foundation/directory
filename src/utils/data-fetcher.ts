@@ -155,8 +155,9 @@ export async function fetchNotionData(): Promise<Omit<NotionData, 'orgLeadsDict'
             or: [
               { property: "Role for Subscription", select: { equals: "Organization Lead" } },
               { property: "Role for Subscription", select: { equals: "Working Group Chair" } },
-              { property: "Role for Subscription", select: { equals: "Project Lead" } },
-              { property: "Role for Subscription", select: { equals: "Project Co-Lead" } },
+              { property: "Role for Subscription", select: { equals: "Working Group Vice-Chair" } },
+              { property: "Role for Subscription", select: { equals: "Project Chair" } },
+              { property: "Role for Subscription", select: { equals: "Project Vice-Chair" } },
               { property: "Role for Subscription", select: { equals: "Committee Chair" } },
               { property: "Role for Subscription", select: { equals: "Committee Vice-Chair" } },
               { property: "Role for Subscription", select: { equals: "Committee Member" } },
