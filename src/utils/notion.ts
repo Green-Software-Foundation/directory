@@ -89,8 +89,10 @@ export function createOrgLeadsDict(subscriptionResponse: { results: NotionSubscr
       if (
         company &&
         (role === "Organization Lead" ||
-          role === "Project Lead" ||
+          role === "Project Chair" ||
+          role === "Project Vice-Chair" ||
           role === "Committee Chair" ||
+          role === "Committee Vice-Chair" ||
           role === "Committee Member")
       ) {
         if (!acc[company]) {
